@@ -16,9 +16,9 @@ const ContactSection = () => {
                     Stay Connected with us
                 </h1>
                 <div>
-                    <input type="email" placeholder="Email Address" class="input w-full my-2" />
-                    <input type="text" placeholder="Subject" class="input w-full my-2" />
-                    <textarea class="textarea w-full h-40 my-2" placeholder="Your Message"></textarea>
+                    <input type="email" placeholder="Email Address" className="input w-full my-2" />
+                    <input type="text" placeholder="Subject" className="input w-full my-2" />
+                    <textarea className="textarea w-full h-40 my-2" placeholder="Your Message"></textarea>
                     <div className='flex justify-center'>
                         <GradientButton>Submit</GradientButton>
                     </div>
