@@ -4,7 +4,7 @@ import GradientButton from '../Shared/GradientButton';
 
 const Banner = () => {
     return (
-        <div class="hero min-h-screen bg-base-100 mb-5">
+        <div class="hero min-h-screen mb-5">
             <div class="hero-content gap-12 flex-col lg:flex-row">
                 <div className='mt-10'>
                     <h1 class="text-5xl font-bold">Your New Smile Starts Here</h1>
