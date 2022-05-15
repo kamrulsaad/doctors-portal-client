@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 import React from 'react';
 
-const AppointmentModal = ({ treatment, setServices, date }) => {
+const AppointmentModal = ({ treatment, date }) => {
 
     const { name, slots, _id } = treatment;
 
@@ -15,11 +15,16 @@ const AppointmentModal = ({ treatment, setServices, date }) => {
                     </label>
                     <h3 className='text-accent text-xl font-semibold mb-4'>{name}</h3>
                     <form className='justify-items-center grid grid-cols-1 gap-4'>
-                        <input type='text' value={format(date, 'PP')} class="input input-bordered w-full max-w-xs" />
-                        <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs" />
-                        <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs" />
-                        <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs" />
-                        <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs" />
+                        <input type="text" disabled value={format(date, 'PP')} class="input input-bordered w-full max-w-xs" />
+                        <select name="slot" class="select select-bordered w-full max-w-xs">
+                            {
+                                slots.map(slot => <option value={slot}>{slot}</option>)
+                            }
+                        </select>
+                        <input type="text" name="name" placeholder="Your Name" class="input input-bordered w-full max-w-xs" />
+                        <input type="email" name="email" placeholder="Email Address" class="input input-bordered w-full max-w-xs" />
+                        <input type="text" name="phone" placeholder="Phone Number" class="input input-bordered w-full max-w-xs" />
+                        <input type="submit" value="Submit" class="btn btn-secondary w-full max-w-xs" />
                     </form>
                 </div>
             </div>

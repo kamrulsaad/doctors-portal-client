@@ -1,10 +1,14 @@
 import React from 'react';
 import chair from '../../assets/images/chair.png'
+import bg from '../../assets/images/bg.png'
 import GradientButton from '../Shared/GradientButton';
 
 const Banner = () => {
     return (
-        <div className="hero min-h-screen mb-5">
+        <div style={{
+            background: `url(${bg})`,
+            backgroundSize: 'cover',
+            backgroundPosition: "center"}}  className="hero min-h-screen mb-5">
             <div className="hero-content gap-12 flex-col lg:flex-row">
                 <div className='mt-10'>
                     <h1 className="text-5xl font-bold">Your New Smile Starts Here</h1>
