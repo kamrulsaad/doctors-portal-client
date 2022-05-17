@@ -2,21 +2,22 @@ import { format } from 'date-fns';
 import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
+import Loading from '../Shared/Loading';
 
 const AppointmentModal = ({ treatment, date, setTreatment }) => {
 
-    const [user] = useAuthState(auth) 
+    const [user, loading] = useAuthState(auth) 
+
+    if(loading) return <Loading></Loading>
 
     const { name, slots, _id } = treatment;
 
     const handleFormSubmit = e => {
         e.preventDefault()
         const slot = e.target.slot.value
-        const email = e.target.email.value
-        const name = e.target.name.value
         const phone = e.target.phone.value
-        const data = { _id, date: format(date, "PP"), slot, email, name, phone}
-        console.log(data)
+        const booking = { _id, date: format(date, "PP"), slot, email: user?.email, treatment : name, patient: user?.displayName, phone}
+        console.log(booking)
         setTreatment(null)
     }
 
@@ -36,7 +37,7 @@ const AppointmentModal = ({ treatment, date, setTreatment }) => {
                                 slots.map(slot => <option key={slot}>{slot}</option>)
                             }
                         </select>
-                        <input type="text" name='name' value={user?.displayName || ''} disabled={user?.displayName} placeholder="Your Name" className="input input-bordered w-full" />
+                        <input type="text" name='patient' value={user?.displayName || ''} disabled={user?.displayName} placeholder="Your Name" className="input input-bordered w-full" />
                         <input type="email" name='email' value={user?.email || ''} disabled placeholder="Your Email" className="input input-bordered w-full" />
                         <input type="text" name='phone' placeholder="Phone Number" className="input input-bordered w-full" />
                         <input type="submit" value="Submit" className="w-full btn btn-accent" />
