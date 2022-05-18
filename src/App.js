@@ -12,6 +12,7 @@ import DashBoard from "./assets/Dashboard/DashBoard";
 import MyAppointments from "./assets/Dashboard/MyAppointments";
 import MyReview from "./assets/Dashboard/MyReview";
 import AllUsers from "./assets/Dashboard/AllUsers";
+import RequireAdmin from "./Pages/Shared/RequireAdmin";
 
 function App() {
   return (
@@ -23,13 +24,15 @@ function App() {
         <Route path="/dashboard" element={<RequireAuth><DashBoard></DashBoard></RequireAuth>}>
           <Route index element={<MyAppointments></MyAppointments>}></Route>
           <Route path="/dashboard/myreview" element={<MyReview></MyReview>}></Route>
-          <Route path="/dashboard/allusers" element={<AllUsers></AllUsers>}></Route>
+          <Route path="/dashboard/allusers"
+            element={<RequireAdmin><AllUsers></AllUsers></RequireAdmin>}>
+          </Route>
         </Route>
         <Route path="/login" element={<Login></Login>}></Route>
         <Route path="/signup" element={<Signup></Signup>}></Route>
       </Routes>
       <Footer></Footer>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 }
