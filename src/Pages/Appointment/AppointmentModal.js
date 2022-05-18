@@ -1,14 +1,15 @@
 import { format } from 'date-fns';
 import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { toast } from 'react-toastify';
 import auth from '../../firebase.init';
 import Loading from '../Shared/Loading';
 
 const AppointmentModal = ({ treatment, date, setTreatment }) => {
 
-    const [user, loading] = useAuthState(auth) 
+    const [user, loading] = useAuthState(auth)
 
-    if(loading) return <Loading></Loading>
+    if (loading) return <Loading></Loading>
 
     const { name, slots, _id } = treatment;
 
@@ -16,9 +17,31 @@ const AppointmentModal = ({ treatment, date, setTreatment }) => {
         e.preventDefault()
         const slot = e.target.slot.value
         const phone = e.target.phone.value
-        const booking = { _id, date: format(date, "PP"), slot, email: user?.email, treatment : name, patient: user?.displayName, phone}
-        console.log(booking)
-        setTreatment(null)
+        const booking = {
+            treatmentId: _id,
+            date: format(date, "PP"),
+            slot,
+            patientEmail: user?.email,
+            treatment: name,
+            patient: user?.displayName,
+            phone
+        }
+
+        fetch('http://localhost:5000/booking', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(booking)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if(data.success) {
+                    toast.success(`Added Appointment on ${format(date, "PP")} at ${slot}`)
+                    setTreatment(null)
+                }
+                else toast.warning("Sorry, You can only book one appointment per day.")
+            })
     }
 
     return (
@@ -34,7 +57,7 @@ const AppointmentModal = ({ treatment, date, setTreatment }) => {
                         <input type="text" disabled value={format(date, "PP")} className="input input-bordered w-full" />
                         <select name='slot' className="select select-bordered w-full">
                             {
-                                slots.map(slot => <option key={slot}>{slot}</option>)
+                                slots.map((slot , index) => <option key={index}>{slot}</option>)
                             }
                         </select>
                         <input type="text" name='patient' value={user?.displayName || ''} disabled={user?.displayName} placeholder="Your Name" className="input input-bordered w-full" />
