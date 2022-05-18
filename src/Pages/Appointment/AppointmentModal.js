@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import auth from '../../firebase.init';
 import Loading from '../Shared/Loading';
 
-const AppointmentModal = ({ treatment, date, setTreatment }) => {
+const AppointmentModal = ({ treatment, date, setTreatment, refetch }) => {
 
     const [user, loading] = useAuthState(auth)
 
@@ -39,8 +39,9 @@ const AppointmentModal = ({ treatment, date, setTreatment }) => {
                 if(data.success) {
                     toast.success(`Added Appointment on ${format(date, "PP")} at ${slot}`)
                     setTreatment(null)
+                    refetch()
                 }
-                else toast.warning("Sorry, You can only book one appointment per day.")
+                else toast.warning(`Sorry, You can book only one appointment for ${name} per day.`)
             })
     }
 
