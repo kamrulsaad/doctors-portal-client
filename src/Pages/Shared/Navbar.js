@@ -3,13 +3,10 @@ import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { NavLink } from 'react-router-dom';
 import auth from '../../firebase.init';
-import Loading from './Loading';
 
 const Navbar = () => {
 
-    const [user, loading] = useAuthState(auth) 
-
-    if(loading) return <Loading></Loading>
+    const [user] = useAuthState(auth) 
 
     const menuItems = <> 
     <li><NavLink to='/'>Home</NavLink></li>
@@ -18,11 +15,14 @@ const Navbar = () => {
     <li><NavLink to='/reviews'>Reviews</NavLink></li>
     <li><NavLink to='/contact'>Contact Us</NavLink></li>
     <li><NavLink to='/dashboard'>Dashboard</NavLink></li>
-    <li>{user ? <button onClick={() => signOut(auth)} className='btn btn-ghost'>Sign Out</button> :<NavLink to='/login'>Login</NavLink>}</li>
+    <li>{user ? <button onClick={() => {
+        signOut(auth)
+        localStorage.removeItem('accessToken')
+    }} className='btn btn-ghost'>Sign Out</button> :<NavLink to='/login'>Login</NavLink>}</li>
     </>
 
     return (
-        <div className="navbar fixed top-0 z-50 bg-base-100">
+        <div className="navbar fixed top-0 z-50 bg-base-100 lg:px-10">
             <div className="navbar-start w-full lg:w-auto">
                 <div className="dropdown">
                     <label tabIndex="0" className="btn btn-ghost lg:hidden">
