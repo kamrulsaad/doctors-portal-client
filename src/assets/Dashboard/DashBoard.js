@@ -5,11 +5,9 @@ const DashBoard = () => {
     return (
         <div class="drawer drawer-mobile mt-16">
             <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
-            <div class="drawer-content flex flex-col items-center justify-center">
-                <h1 className='text-2xl font-bold text-accent'>Welcome to Dashboard</h1>
+            <div class="drawer-content flex flex-col items-center ">
+                <h1 className='text-2xl mb-2 font-bold text-accent'>Welcome to Dashboard</h1>
                 <Outlet/>
-                
-
             </div>
             <div class="drawer-side">
                 <label for="my-drawer-2" class="drawer-overlay"></label>
