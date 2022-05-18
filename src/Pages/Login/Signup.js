@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
@@ -22,15 +22,17 @@ const Signup = () => {
 
     const navigate = useNavigate()
 
+    useEffect(() => {
+        if (token) navigate('/appointment')
+    },[navigate,token])
+
     if (loading || googleLoading || updating) return <Loading></Loading>
 
     const signInError = googleError || error || updateError;
 
-    if(token) navigate('/appointment')
-
     const onSubmit = async data => {
         await createUserWithEmailAndPassword(data.email, data.password)
-        await updateProfile({displayName : data.name})
+        await updateProfile({ displayName: data.name })
     }
 
     return (
