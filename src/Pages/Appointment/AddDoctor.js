@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
+import { toast } from 'react-toastify';
 import Loading from '../Shared/Loading'
 
 const AddDoctor = () => {
@@ -8,12 +9,49 @@ const AddDoctor = () => {
     const { data: services, isLoading } = useQuery('services', () => fetch('http://localhost:5000/services').then(res => res.json())
     )
 
-    const { register, formState: { errors }, handleSubmit } = useForm();
+    const { register, formState: { errors }, handleSubmit, reset } = useForm();
+
+    const imgBBAPIkey = '74922ada22c311f177ebbc5022b4cfed'
 
     if (isLoading) return <Loading></Loading>
 
     const onSubmit = async data => {
-        console.log( data);
+        const url = `https://api.imgbb.com/1/upload?key=${imgBBAPIkey}`
+        const image = data.image[0]
+        const formData = new FormData();
+        formData.append('image', image);
+        fetch(url, {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(result => {
+            if(result?.success){
+                const img = result.data.url
+                const doctor = {
+                    name : data.name,
+                    email : data.email,
+                    img,
+                    specialty: data.specialty
+                }
+                fetch('http://localhost:5000/doctors', {
+                    method: 'POST',
+                    headers: {
+                        'content-type' : 'application/json',
+                        'authorization' : `Bearer ${localStorage.getItem('accessToken')}`
+                    },
+                    body: JSON.stringify(doctor)
+                })
+                .then(res => res.json())
+                .then(inserted => {
+                    if(inserted.acknowledged) {
+                        toast.success('Doctor Added Successfully')
+                        reset()
+                    }
+                    else toast.error('Something went wrong!')
+                })
+            }
+        })
     }
 
     return (
@@ -87,7 +125,7 @@ const AddDoctor = () => {
                     <label className="label">
                         <span className="label-text">Choose Image</span>
                     </label>
-                    <input {...register("img", {
+                    <input {...register("image", {
                         required: {
                             value: true,
                             message: "Please upload your image"
