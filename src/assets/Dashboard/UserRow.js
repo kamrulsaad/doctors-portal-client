@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { toast } from 'react-toastify';
+import Swal from 'sweetalert2'
 import auth from '../../firebase.init';
 
 const UserRow = ({ user, index, refetch }) => {
@@ -16,31 +17,46 @@ const UserRow = ({ user, index, refetch }) => {
                 'authorization': `Bearer ${localStorage.getItem('accessToken')}`
             }
         })
-        .then(res => {
-            if(res.status === 403){
-                toast.error(res.statusText + ' Access')
-            }
-            return res.json()
-        })
-        .then(data => {
-            if(data.modifiedCount > 0){
-                toast.success(`Successfully added ${email} as Admin`)
-                refetch()
-            }
-        })
+            .then(res => {
+                if (res.status === 403) {
+                    toast.error(res.statusText + ' Access')
+                }
+                return res.json()
+            })
+            .then(data => {
+                if (data.modifiedCount > 0) {
+                    toast.success(`Successfully added ${email} as Admin`)
+                    refetch()
+                }
+            })
     }
 
     const handleDelete = () => {
-        fetch(`http://localhost:5000/users?email=${email}`, {
-            method: 'DELETE',
-            headers: {
-                'authorization': `Bearer ${localStorage.getItem('accessToken')}`
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#F2CA73',
+            cancelButtonColor: '#EE4B2B',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`http://localhost:5000/users?email=${email}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                    }
+                })
+                    .then(res => res.json())
+                    .then(() => refetch())
+                Swal.fire(
+                    'Deleted!',
+                    `User: ${email} has been deleted`,
+                    'success'
+                )
             }
-        })
-        .then(res => res.json())
-        .then(data => {
-            toast.success(`Successfully deleted ${email}`)
-            refetch()
         })
     }
 
@@ -54,7 +70,7 @@ const UserRow = ({ user, index, refetch }) => {
             </td>
             <td>{
                 loggedInUser?.email !== email && <button onClick={handleDelete} className='btn btn-xs btn-error'>Remove User</button>
-                }</td>
+            }</td>
         </tr>
     );
 };

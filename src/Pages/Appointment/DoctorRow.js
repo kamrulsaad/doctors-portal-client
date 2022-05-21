@@ -1,21 +1,38 @@
 import React from 'react';
-import { toast } from 'react-toastify';
+import Swal from 'sweetalert2'
 
-const DoctorRow = ({doctor, index, refetch}) => {
+const DoctorRow = ({ doctor, index, refetch }) => {
 
-    const {img, name, email, specialty, location} = doctor
+    const { img, name, email, specialty, location } = doctor
 
     const handleDelete = () => {
-        fetch(`http://localhost:5000/doctor/${email}`, {
-            method: 'DELETE',
-            headers: {
-                'authorization': `Bearer ${localStorage.getItem('accessToken')}`
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#F2CA73',
+            cancelButtonColor: '#EE4B2B',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                fetch(`http://localhost:5000/doctor/${email}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                    }
+                })
+                    .then(res => res.json())
+                    .then(data => { if (data.deletedCount) refetch() })
+
+                Swal.fire(
+                    'Deleted!',
+                    `Dr. ${name} has been deleted`,
+                    'success'
+                )
             }
-        })
-        .then(res => res.json())
-        .then(data => {
-            if(data.deletedCount) toast.success(`Successfully deleted ${name}`)
-            refetch()
         })
     }
 
