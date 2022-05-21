@@ -18,7 +18,7 @@ const DoctorRow = ({ doctor, index, refetch }) => {
         }).then((result) => {
             if (result.isConfirmed) {
 
-                fetch(`http://localhost:5000/doctor/${email}`, {
+                fetch(`https://doctors-portal-server-by-saad.herokuapp.com/doctor/${email}`, {
                     method: 'DELETE',
                     headers: {
                         'authorization': `Bearer ${localStorage.getItem('accessToken')}`
@@ -42,24 +42,24 @@ const DoctorRow = ({ doctor, index, refetch }) => {
                 {index + 1}
             </th>
             <td>
-                <div class="flex items-center space-x-3">
-                    <div class="avatar">
-                        <div class="mask mask-squircle w-12 h-12">
+                <div className="flex items-center space-x-3">
+                    <div className="avatar">
+                        <div className="mask mask-squircle w-12 h-12">
                             <img src={img} alt="Avatar Tailwind CSS Component" />
                         </div>
                     </div>
                     <div>
-                        <div class="font-bold">{name}</div>
-                        <div class="text-sm opacity-50">{location ? location : 'United States'}</div>
+                        <div className="font-bold">{name}</div>
+                        <div className="text-sm opacity-50">{location ? location : 'United States'}</div>
                     </div>
                 </div>
             </td>
             <td>
-                <span class="badge badge-accent badge-md">{specialty}</span>
+                <span className="badge badge-accent badge-md">{specialty}</span>
             </td>
             <td>{email}</td>
             <th>
-                <button onClick={handleDelete} class="btn btn-error btn-xs">Remove</button>
+                <button onClick={handleDelete} className="btn btn-error btn-xs">Remove</button>
             </th>
         </tr>
     );

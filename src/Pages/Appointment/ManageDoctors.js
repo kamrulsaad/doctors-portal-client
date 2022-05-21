@@ -5,7 +5,7 @@ import DoctorRow from './DoctorRow';
 
 const ManageDoctors = () => {
 
-    const { data: doctors, isLoading, refetch} = useQuery('doctors', () => fetch('http://localhost:5000/doctors', {
+    const { data: doctors, isLoading, refetch} = useQuery('doctors', () => fetch('https://doctors-portal-server-by-saad.herokuapp.com/doctors', {
         headers: {
             'authorization': `Bearer ${localStorage.getItem('accessToken')}`
         }
@@ -17,8 +17,8 @@ const ManageDoctors = () => {
     return (
         <div className='w-full'>
             <p className="text-2xl font-medium text-center">All Doctors</p>
-            <div class="overflow-x-auto w-full">
-                <table class="table table-zebra w-full">
+            <div className="overflow-x-auto w-full">
+                <table className="table table-zebra w-full">
                     <thead>
                         <tr>
                             <th></th>

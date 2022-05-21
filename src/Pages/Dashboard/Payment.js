@@ -13,7 +13,7 @@ const Payment = () => {
 
     const { id } = useParams()
 
-    const url = `http://localhost:5000/payment/${id}`
+    const url = `https://doctors-portal-server-by-saad.herokuapp.com/payment/${id}`
 
     const { data: booking, isLoading } = useQuery(['booking', id], () => fetch(url, {
         method: 'GET',
@@ -27,13 +27,13 @@ const Payment = () => {
 
     return (
         <div className='w-full'>
-            <div class="card w-1/2 mx-auto bg-base-100 shadow-xl">
-                <div class="card-body text-center">
-                    <h2 class="text-center text-2xl font-bold">Hello <span className='text-secondary'>{booking.patient},</span></h2>
-                    <p>Your Appointment: <span className='text-orange-700'>${booking.date}</span> at {booking.slot}</p>
-                    <p>Please pay :${booking.price}</p>
+            <div className="card w-1/2 mx-auto bg-base-100 shadow-xl">
+                <div className="card-body text-center">
+                    <h2 className="text-center text-2xl font-bold">Hello <span className='text-secondary'>{booking.patient},</span></h2>
+                    <p>Your Appointment: <span className='text-orange-700'>{booking.date}</span> at {booking.slot}</p>
+                    <p>Please pay : <span className='font-bold'>${booking.price}</span></p>
                 </div>
-                <div class="card-body text-center">
+                <div className="card-body text-center">
                     <Elements stripe={stripePromise}>
                         <CheckoutForm booking={booking} />
                     </Elements>

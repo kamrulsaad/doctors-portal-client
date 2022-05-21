@@ -33,7 +33,7 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <a href='/' className="btn btn-ghost normal-case text-xl">Doctors Portal</a>
-                <label for="my-drawer-2" class="btn btn-primary ml-auto drawer-button text-base-100 lg:hidden">Open Dashboard</label>
+                <label htmlFor="my-drawer-2" className="btn btn-primary ml-auto drawer-button text-base-100 lg:hidden">Open Dashboard</label>
             </div>
             <div className="navbar-end hidden lg:flex lg:flex-1">
                 <ul className="menu menu-horizontal gap-x-2 p-0">

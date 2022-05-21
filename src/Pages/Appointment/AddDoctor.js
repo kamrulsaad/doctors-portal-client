@@ -6,7 +6,7 @@ import Loading from '../Shared/Loading'
 
 const AddDoctor = () => {
 
-    const { data: services, isLoading } = useQuery('services', () => fetch('http://localhost:5000/services').then(res => res.json())
+    const { data: services, isLoading } = useQuery('services', () => fetch('https://doctors-portal-server-by-saad.herokuapp.com/services').then(res => res.json())
     )
 
     const { register, formState: { errors }, handleSubmit, reset } = useForm();
@@ -35,7 +35,7 @@ const AddDoctor = () => {
                     specialty: data.specialty,
                     location: data.location
                 }
-                fetch('http://localhost:5000/doctors', {
+                fetch('https://doctors-portal-server-by-saad.herokuapp.com/doctors', {
                     method: 'POST',
                     headers: {
                         'content-type' : 'application/json',
@@ -103,7 +103,7 @@ const AddDoctor = () => {
                     </label>
                 </div>
 
-                <div class="form-control w-full mx-auto max-w-xs">
+                <div className="form-control w-full mx-auto max-w-xs">
                     <label className="label">
                         <span className="label-text">Specialty</span>
                     </label>
@@ -112,7 +112,7 @@ const AddDoctor = () => {
                             value: true,
                             message: "Please enter  specialty"
                         }
-                    })} class="select select-bordered">
+                    })} className="select select-bordered">
                         {
                             services.map(service => <option key={service._id}>{service.name}</option>)
                         }

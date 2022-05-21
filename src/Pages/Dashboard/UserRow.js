@@ -11,7 +11,7 @@ const UserRow = ({ user, index, refetch }) => {
     const { email, role } = user
 
     const handleMakeAdmin = () => {
-        fetch(`http://localhost:5000/user/admin/${email}`, {
+        fetch(`https://doctors-portal-server-by-saad.herokuapp.com/user/admin/${email}`, {
             method: 'PUT',
             headers: {
                 'authorization': `Bearer ${localStorage.getItem('accessToken')}`
@@ -43,7 +43,7 @@ const UserRow = ({ user, index, refetch }) => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/users?email=${email}`, {
+                fetch(`https://doctors-portal-server-by-saad.herokuapp.com/users?email=${email}`, {
                     method: 'DELETE',
                     headers: {
                         'authorization': `Bearer ${localStorage.getItem('accessToken')}`

@@ -9,7 +9,7 @@ const useToken = user => {
         const currentUser = { email }
 
         if (email) {
-            fetch(`http://localhost:5000/user/${email}`, {
+            fetch(`https://doctors-portal-server-by-saad.herokuapp.com/user/${email}`, {
                 method: 'PUT',
                 headers: {
                     'content-type': "application/json",

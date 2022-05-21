@@ -5,7 +5,7 @@ import UserRow from './UserRow';
 
 const AllUsers = () => {
 
-    const { data: users, isLoading, refetch } = useQuery('allUsers', () => fetch(`http://localhost:5000/users`, {
+    const { data: users, isLoading, refetch } = useQuery('allUsers', () => fetch(`https://doctors-portal-server-by-saad.herokuapp.com/users`, {
         method: "GET",
         headers: {
             'authorization' : `Bearer ${localStorage.getItem('accessToken')}`
@@ -17,8 +17,8 @@ const AllUsers = () => {
     if (isLoading) return <Loading></Loading>
 
     return (
-        <div class="overflow-x-auto w-full">
-            <table class="table table-zebra w-full">
+        <div className="overflow-x-auto w-full">
+            <table className="table table-zebra w-full">
                 <thead>
                     <tr>
                         <th></th>

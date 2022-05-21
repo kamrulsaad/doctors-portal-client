@@ -11,14 +11,14 @@ const MyAppointments = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        fetch(`http://localhost:5000/booking?email=${user?.email}`, {
+        fetch(`https://doctors-portal-server-by-saad.herokuapp.com/booking?email=${user?.email}`, {
             method: 'GET',
             headers: {
-                'authorization' : `Bearer ${localStorage.getItem('accessToken')}`
+                'authorization': `Bearer ${localStorage.getItem('accessToken')}`
             }
         })
             .then(res => {
-                if(res.status === 401 || res.status === 403){
+                if (res.status === 401 || res.status === 403) {
                     navigate('/')
                     signOut(auth)
                     localStorage.removeItem('accessToken')
@@ -29,8 +29,8 @@ const MyAppointments = () => {
     }, [user, navigate])
 
     return (
-        <div class="overflow-x-auto w-full">
-            <table class="table table-zebra w-full">
+        <div className="overflow-x-auto w-full">
+            <table className="table table-zebra w-full">
                 <thead>
                     <tr>
                         <th></th>
@@ -45,15 +45,21 @@ const MyAppointments = () => {
                     {
                         appointments.map((appointment, index) =>
                             <tr key={index}>
-                                <th>{index+1}</th>
+                                <th>{index + 1}</th>
                                 <td>{appointment.patient}</td>
                                 <td>{appointment.treatment}</td>
                                 <td>{appointment.date}</td>
                                 <td>{appointment.slot}</td>
-                                <td>{appointment.price && <Link 
-                                to={`/dashboard/payment/${appointment._id}`}>
-                                    <button className='btn btn-xs btn-success'>Pay Now</button> 
-                                    </Link>}</td>
+                                <td>
+                                    {(appointment.price && !appointment.paid) && 
+                                <Link
+                                    to={`/dashboard/payment/${appointment._id}`}>
+                                    <button className='btn btn-xs btn-success'>Pay Now</button>
+                                </Link>}
+                                    {(appointment.price && appointment.paid) && 
+                                    <button className='btn btn-xs btn-success'>Paid</button>
+                                }
+                                </td>
                             </tr>)
                     }
                 </tbody>
