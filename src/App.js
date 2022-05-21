@@ -8,13 +8,14 @@ import Navbar from "./Pages/Shared/Navbar";
 import RequireAuth from "./Pages/Shared/RequireAuth";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import DashBoard from "./assets/Dashboard/DashBoard";
-import MyAppointments from "./assets/Dashboard/MyAppointments";
-import MyReview from "./assets/Dashboard/MyReview";
-import AllUsers from "./assets/Dashboard/AllUsers";
+import DashBoard from "./Pages/Dashboard/DashBoard";
+import MyAppointments from "./Pages/Dashboard/MyAppointments";
+import MyReview from "./Pages/Dashboard/MyReview";
+import AllUsers from "./Pages/Dashboard/AllUsers";
 import RequireAdmin from "./Pages/Shared/RequireAdmin";
 import AddDoctor from "./Pages/Appointment/AddDoctor";
 import ManageDoctors from "./Pages/Appointment/ManageDoctors";
+import Payment from "./Pages/Dashboard/Payment";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/dashboard" element={<RequireAuth><DashBoard></DashBoard></RequireAuth>}>
           <Route index element={<MyAppointments></MyAppointments>}></Route>
           <Route path="/dashboard/myreview" element={<MyReview></MyReview>}></Route>
+          <Route path={`/dashboard/payment/:id`} element={<Payment></Payment>}></Route>
           <Route path="/dashboard/allusers"
             element={<RequireAdmin><AllUsers></AllUsers></RequireAdmin>}>
           </Route>

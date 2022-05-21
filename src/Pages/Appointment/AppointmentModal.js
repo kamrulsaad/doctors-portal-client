@@ -11,7 +11,7 @@ const AppointmentModal = ({ treatment, date, setTreatment, refetch }) => {
 
     if (loading) return <Loading></Loading>
 
-    const { name, slots, _id } = treatment;
+    const { name, slots, _id, price } = treatment;
 
     const handleFormSubmit = e => {
         e.preventDefault()
@@ -21,6 +21,7 @@ const AppointmentModal = ({ treatment, date, setTreatment, refetch }) => {
             treatmentId: _id,
             date: format(date, "PP"),
             slot,
+            price,
             patientEmail: user?.email,
             treatment: name,
             patient: user?.displayName,
