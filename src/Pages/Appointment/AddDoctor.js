@@ -32,7 +32,8 @@ const AddDoctor = () => {
                     name : data.name,
                     email : data.email,
                     img,
-                    specialty: data.specialty
+                    specialty: data.specialty,
+                    location: data.location
                 }
                 fetch('http://localhost:5000/doctors', {
                     method: 'POST',
@@ -63,16 +64,16 @@ const AddDoctor = () => {
 
                 <div className="form-control mx-auto w-full max-w-xs">
                     <label className="label">
-                        <span className="label-text">Your Name</span>
+                        <span className="label-text">Doctor's Name</span>
                     </label>
                     <input {...register("name", {
                         required: {
                             value: true,
-                            message: "Please enter your name"
+                            message: "Please enter name"
                         }
                     })}
                         type="text"
-                        placeholder="Your Name"
+                        placeholder=" Name"
                         className="input input-bordered w-full" />
                     <label className="label">
                         {errors.name?.type === 'required' && <span className="label-text-alt text-red-600">{errors.name.message}</span>}
@@ -86,7 +87,7 @@ const AddDoctor = () => {
                     <input {...register("email", {
                         required: {
                             value: true,
-                            message: "Please enter your email"
+                            message: "Please enter email"
                         },
                         pattern: {
                             value: /^\S+@\S+\.\S+$/,
@@ -94,7 +95,7 @@ const AddDoctor = () => {
                         }
                     })}
                         type="email"
-                        placeholder="Your Email"
+                        placeholder=" Email"
                         className="input input-bordered w-full" />
                     <label className="label">
                         {errors.email?.type === 'required' && <span className="label-text-alt text-red-600">{errors.email.message}</span>}
@@ -109,7 +110,7 @@ const AddDoctor = () => {
                     <select {...register("specialty", {
                         required: {
                             value: true,
-                            message: "Please enter your specialty"
+                            message: "Please enter  specialty"
                         }
                     })} class="select select-bordered">
                         {
@@ -139,7 +140,24 @@ const AddDoctor = () => {
                     </label>
                 </div>
 
-                <p className='text-red-500 mb-2 text-xs text-center'></p>
+                <div className="form-control mx-auto w-full max-w-xs">
+                    <label className="label">
+                        <span className="label-text">Address</span>
+                    </label>
+                    <input {...register("location", {
+                        required: {
+                            value: true,
+                            message: "Please enter your location"
+                        }
+                    })}
+                        type="text"
+                        placeholder="Address"
+                        className="input input-bordered w-full" />
+                    <label className="label">
+                        {errors.location?.type === 'required' && <span className="label-text-alt text-red-600">{errors.location.message}</span>}
+                    </label>
+                </div>
+
                 <div className='form-control mx-auto w-full max-w-xs'>
                     <input className='btn w-full max-w-xs' value='signup' type="submit" />
                 </div>
